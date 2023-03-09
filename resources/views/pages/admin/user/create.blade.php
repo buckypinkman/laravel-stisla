@@ -21,12 +21,12 @@
                             <div class="card-header">
                                 <h4>Create User</h4>
                             </div>
-                            <form action="{{ route('admin.user.store') }}" method="post">
+                            <form action="{{ route($module.'.store') }}" method="post">
                                 @csrf
                                 <div class="card-body row">
                                     <div class="form-group col-md-6">
                                         <label>Name</label>
-                                        <input class="form-control">
+                                        <input class="form-control" name="name">
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label>Email</label>
@@ -37,6 +37,7 @@
                                                 </div>
                                             </div>
                                             <input type="email"
+                                                name="email"
                                                 class="form-control phone-number">
                                         </div>
                                     </div>
@@ -50,6 +51,7 @@
                                             </div>
                                             <input type="password"
                                                 class="form-control pwstrength"
+                                                name="password"
                                                 data-indicator="pwindicator">
                                         </div>
                                         <div id="pwindicator"
@@ -58,9 +60,15 @@
                                             <div class="label"></div>
                                         </div>
                                     </div>
+                                    <div class="form-group col-md-6">
+                                        <label>Role</label>
+                                        <select name="role" class="form-control">
+                                            <option value="admin">Admin</option>
+                                        </select>
+                                    </div>
                                     <div class="col-12">
                                         <button class="btn btn-primary">Save</button>
-                                        <a class="btn btn-outline-danger" href="{{ route('admin.user.index') }}">Back</a>
+                                        <a class="btn btn-outline-danger" href="{{ route($module.'.index') }}">Back</a>
                                     </div>
                                 </form>
                             </div>

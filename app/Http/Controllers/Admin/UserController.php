@@ -7,25 +7,33 @@ use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\View as FacadesView;
+use RealRashid\SweetAlert\Facades\Alert;
+use Yajra\DataTables\DataTables;
 class UserController extends Controller
 {
-    protected $view;
+    protected $module;
     protected $model;
 
     public function __construct(User $user)
     {
-        $this->view = 'pages.admin.user';
+        $this->module = 'admin.user';
         $this->model = $user;
+        FacadesView::share('module', $this->module);
     }
 
     /**
      * Display a listing of the resource.
      *
      */
-    public function index(): View
+    public function index(Request $request)
     {
-        return view($this->view.'.index');
+        if ($request->ajax()) {
+            $data = $this->model->latest();
+            return DataTables::of($data)->make();
+        }
+
+        return view('pages.'.$this->module.'.index');
     }
 
     /**
@@ -34,7 +42,7 @@ class UserController extends Controller
      */
     public function create(): View
     {
-        return view($this->view.'.create');
+        return view('pages.'.$this->module.'.create');
     }
 
     /**
@@ -44,8 +52,11 @@ class UserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        User::create($request->all());
-        return to_route('admin.user.create');
+        $user = $this->model->create($request->all());
+        // $user->assignRole($request->role);
+        Alert::success('Success', 'Success Create');
+
+        return to_route($this->module.'.index');
     }
 
     /**
@@ -64,8 +75,8 @@ class UserController extends Controller
      */
     public function edit($id): View
     {
-        $user = User::find($id);
-        return view($this->view.'.edit', compact('user'));
+        $user = $this->model->findOrFail($id);
+        return view('pages.'.$this->module.'.edit', compact('user'));
     }
 
     /**
@@ -76,10 +87,10 @@ class UserController extends Controller
      */
     public function update(Request $request, $id): RedirectResponse
     {
-        $user = User::find($id);
+        $user = $this->model->find($id);
         $user->update($request->all());
 
-        return to_route('admin.user.index');
+        return to_route($this->module.'.index');
     }
 
     /**
@@ -89,7 +100,7 @@ class UserController extends Controller
      */
     public function destroy($id): RedirectResponse
     {
-        User::find($id)->destroy();
-        return to_route('admin.user.index');
+        $this->model->find($id)->destroy();
+        return to_route($this->module.'.index');
     }
 }

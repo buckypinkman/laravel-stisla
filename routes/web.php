@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 // credits
 Route::group(['as' => 'admin.', 'prefix' => 'admin'], function() {
     Route::get('/', [HomeController::class, 'index'])->name('dashboard');
+    Route::get('/user/profile/{id}', [UserController::class, 'edit'])->name('profile');
     Route::resource('user', UserController::class);
     // Route::resource('role', [UserController::class]);
     // Route::resource('permission', [UserController::class]);

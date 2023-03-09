@@ -17,6 +17,7 @@
         referrerpolicy="no-referrer" />
     <link rel="stylesheet"
         href="{{ asset('library/select2/dist/css/select2.min.css') }}">
+    <link href="{{ asset('library/datatables/media/css/jquery.dataTables.min.css') }}" rel="stylesheet">
 
     @stack('style')
 
@@ -46,6 +47,7 @@
 <body>
     <div id="app">
         <div class="main-wrapper">
+            @include('sweetalert::alert')
             <!-- Header -->
             @include('components.header')
 
@@ -69,7 +71,7 @@
     <script src="{{ asset('library/moment/min/moment.min.js') }}"></script>
     <script src="{{ asset('js/stisla.js') }}"></script>
     <script src="{{ asset('library/select2/dist/js/select2.full.min.js') }}"></script>
-
+    <script src="{{ asset('library/datatables/media/js/jquery.dataTables.min.js') }}"></script>
     @stack('scripts')
 
     <!-- Template JS File -->

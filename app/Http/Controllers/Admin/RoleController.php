@@ -54,7 +54,6 @@ class RoleController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $role = $this->model->create($request->all());
-        // $role->assignRole($request->role);
         Alert::success('Success', 'Success Create');
 
         return to_route($this->module.'.index');

@@ -18,7 +18,7 @@
     <link rel="stylesheet"
         href="{{ asset('library/select2/dist/css/select2.min.css') }}">
     <link href="{{ asset('library/datatables/media/css/jquery.dataTables.min.css') }}" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.3/css/dataTables.bootstrap4.min.css">
     @stack('style')
 
     <!-- Template CSS -->
@@ -62,6 +62,11 @@
         </div>
     </div>
 
+    <form action="" class="delete-form" method="post">
+        @csrf
+        @method('DELETE')
+    </form>
+
     <!-- General JS Scripts -->
     <script src="{{ asset('library/jquery/dist/jquery.min.js') }}"></script>
     <script src="{{ asset('library/popper.js/dist/umd/popper.js') }}"></script>
@@ -72,6 +77,9 @@
     <script src="{{ asset('js/stisla.js') }}"></script>
     <script src="{{ asset('library/select2/dist/js/select2.full.min.js') }}"></script>
     <script src="{{ asset('library/datatables/media/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('library/sweetalert/dist/sweetalert.min.js') }}"></script>
+
+    <script src="https://cdn.datatables.net/1.13.3/js/dataTables.bootstrap4.min.js"></script>
     @stack('scripts')
 
     <!-- Template JS File -->

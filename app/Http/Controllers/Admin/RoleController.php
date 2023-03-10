@@ -3,22 +3,23 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use App\Models\Role;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View as FacadesView;
 use RealRashid\SweetAlert\Facades\Alert;
 use Yajra\DataTables\DataTables;
-class UserController extends Controller
+
+class RoleController extends Controller
 {
     protected $module;
     protected $model;
 
-    public function __construct(User $user)
+    public function __construct(Role $role)
     {
-        $this->module = 'admin.user';
-        $this->model = $user;
+        $this->module = 'admin.role';
+        $this->model = $role;
         FacadesView::share('module', $this->module);
     }
 
@@ -52,8 +53,8 @@ class UserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $user = $this->model->create($request->all());
-        // $user->assignRole($request->role);
+        $role = $this->model->create($request->all());
+        // $role->assignRole($request->role);
         Alert::success('Success', 'Success Create');
 
         return to_route($this->module.'.index');
@@ -75,8 +76,8 @@ class UserController extends Controller
      */
     public function edit($id): View
     {
-        $user = $this->model->findOrFail($id);
-        return view('pages.'.$this->module.'.edit', compact('user'));
+        $role = $this->model->findOrFail($id);
+        return view('pages.'.$this->module.'.edit', compact('role'));
     }
 
     /**
@@ -87,8 +88,8 @@ class UserController extends Controller
      */
     public function update(Request $request, $id): RedirectResponse
     {
-        $user = $this->model->find($id);
-        $user->update($request->all());
+        $role = $this->model->find($id);
+        $role->update($request->all());
 
         return to_route($this->module.'.index');
     }
@@ -100,8 +101,8 @@ class UserController extends Controller
      */
     public function destroy($id): RedirectResponse
     {
-        $user = $this->model->find($id);
-        $user->delete();
+        $role = $this->model->find($id);
+        $role->delete();
 
         Alert::success('Success', 'Success Delete');
 

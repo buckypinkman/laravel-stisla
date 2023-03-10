@@ -1,15 +1,15 @@
 @extends('layouts.app')
 
-@section('title', 'User List')
+@section('title', 'Permission List')
 
 @section('main')
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h1>Users</h1>
+                <h1>Permissions</h1>
                 <div class="section-header-breadcrumb">
                     <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
-                    <div class="breadcrumb-item">Users</div>
+                    <div class="breadcrumb-item">Permissions</div>
                 </div>
             </div>
 
@@ -19,7 +19,7 @@
                         <div class="card">
                             <div class="card-header">
                                 <div class="d-flex justify-content-between w-100">
-                                    <h4>User List</h4>
+                                    <h4>Permission List</h4>
                                     <a class="btn btn-primary" href="{{ route($module.'.create') }}"><i class="fa fa-plus"></i> Create</a>
                                 </div>
                             </div>
@@ -30,8 +30,7 @@
                                         <thead>
                                             <tr>
                                                 <th>Name</th>
-                                                <th>Email</th>
-                                                <th>Role</th>
+                                                <th>Guard Name</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -59,12 +58,8 @@
                     name: 'name'
                 },
                 {
-                    data: 'email',
-                    name: 'email'
-                },
-                {
-                    data: 'role',
-                    name: 'role'
+                    data: 'guard_name',
+                    name: 'guard_name'
                 },
                 {
                     data: 'action',

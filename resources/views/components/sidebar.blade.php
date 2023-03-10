@@ -20,6 +20,14 @@
                         <a class="nav-link"
                             href="{{ route('admin.user.index') }}">User</a>
                     </li>
+                    <li class="{{ Request::is('role') ? 'active' : '' }}">
+                        <a class="nav-link"
+                            href="{{ route('admin.role.index') }}">Role</a>
+                    </li>
+                    <li class="{{ Request::is('permission') ? 'active' : '' }}">
+                        <a class="nav-link"
+                            href="{{ route('admin.permission.index') }}">Permission</a>
+                    </li>
                     {{-- <li class="{{ Request::is('role') ? 'active' : '' }}">
                         <a class="nav-link"
                             href="{{ url('admin.role') }}">Role</a>

@@ -10,6 +10,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View as FacadesView;
 use RealRashid\SweetAlert\Facades\Alert;
 use Yajra\DataTables\DataTables;
+
+use function PHPUnit\Framework\isEmpty;
+
 class UserController extends Controller
 {
     protected $module;
@@ -88,7 +91,12 @@ class UserController extends Controller
     public function update(Request $request, $id): RedirectResponse
     {
         $user = $this->model->find($id);
-        $user->update($request->all());
+        $data = $request->all();
+
+        if(isEmpty($request->password)) unset($data['password']);
+
+        $user->update($data);
+        Alert::success('Success', 'Success Update');
 
         return to_route($this->module.'.index');
     }

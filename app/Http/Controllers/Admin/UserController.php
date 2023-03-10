@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UserRequest;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -10,9 +12,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View as FacadesView;
 use RealRashid\SweetAlert\Facades\Alert;
 use Yajra\DataTables\DataTables;
-
-use function PHPUnit\Framework\isEmpty;
-
 class UserController extends Controller
 {
     protected $module;
@@ -45,18 +44,20 @@ class UserController extends Controller
      */
     public function create(): View
     {
-        return view('pages.'.$this->module.'.create');
+        $roles = Role::pluck('name');
+        return view('pages.'.$this->module.'.create', compact('roles'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Requests\UserRequest  $request
      */
-    public function store(Request $request): RedirectResponse
+    public function store(UserRequest $request): RedirectResponse
     {
         $user = $this->model->create($request->all());
-        // $user->assignRole($request->role);
+        $user->assignRole($request->role);
+
         Alert::success('Success', 'Success Create');
 
         return to_route($this->module.'.index');
@@ -79,23 +80,27 @@ class UserController extends Controller
     public function edit($id): View
     {
         $user = $this->model->findOrFail($id);
-        return view('pages.'.$this->module.'.edit', compact('user'));
+        $roles = Role::pluck('name');
+
+        return view('pages.'.$this->module.'.edit', compact('user', 'roles'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Requests\UserRequest  $request
      * @param  int  $id
      */
-    public function update(Request $request, $id): RedirectResponse
+    public function update(UserRequest $request, $id): RedirectResponse
     {
         $user = $this->model->find($id);
         $data = $request->all();
 
-        if(isEmpty($request->password)) unset($data['password']);
+        if(empty($request->password)) unset($data['password']);
 
         $user->update($data);
+        $user->syncRoles([$data['role']]);
+
         Alert::success('Success', 'Success Update');
 
         return to_route($this->module.'.index');

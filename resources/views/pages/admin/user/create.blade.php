@@ -27,6 +27,9 @@
                                 <div class="form-group col-md-6">
                                     <label>Name *</label>
                                     <input class="form-control" name="name">
+                                    @error('name')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label>Email *</label>
@@ -38,6 +41,9 @@
                                         </div>
                                         <input type="email" name="email" class="form-control phone-number">
                                     </div>
+                                    @error('email')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label>Password *</label>
@@ -50,6 +56,9 @@
                                         <input type="password" class="form-control pwstrength" name="password"
                                             data-indicator="pwindicator">
                                     </div>
+                                    @error('password')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                     <div id="pwindicator" class="pwindicator">
                                         <div class="bar"></div>
                                         <div class="label"></div>
@@ -58,8 +67,14 @@
                                 <div class="form-group col-md-6">
                                     <label>Role *</label>
                                     <select name="role" class="form-control">
-                                        <option value="admin">Admin</option>
+                                        <option selected disabled>Select Role</option>
+                                        @foreach ($roles as $role)
+                                            <option value="{{ strtolower($role) }}">{{ $role }}</option>
+                                        @endforeach
                                     </select>
+                                    @error('role')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                 <div class="col-12">
                                     <button class="btn btn-primary">Save</button>

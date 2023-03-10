@@ -11,20 +11,20 @@
             <li class="{{ Request::is('admin') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('admin.dashboard') }}"><i class="fas fa-tachometer"></i> <span>Dashboard</span></a>
             </li>
-            <li class="nav-item dropdown {{ @$type_menu === 'layout' ? 'active' : '' }}">
+            <li class="nav-item dropdown {{ Request::is('admin/user', 'admin/role', 'admin/permission') ? 'active' : '' }}">
                 <a href="#"
                     class="nav-link has-dropdown"
                     data-toggle="dropdown"><i class="fas fa-user"></i> <span>User Management</span></a>
                 <ul class="dropdown-menu">
-                    <li class="{{ Request::is('user') ? 'active' : '' }}">
+                    <li class="{{ Request::is('admin/user') ? 'active' : '' }}">
                         <a class="nav-link"
                             href="{{ route('admin.user.index') }}">User</a>
                     </li>
-                    <li class="{{ Request::is('role') ? 'active' : '' }}">
+                    <li class="{{ Request::is('admin/role') ? 'active' : '' }}">
                         <a class="nav-link"
                             href="{{ route('admin.role.index') }}">Role</a>
                     </li>
-                    <li class="{{ Request::is('permission') ? 'active' : '' }}">
+                    <li class="{{ Request::is('admin/permission') ? 'active' : '' }}">
                         <a class="nav-link"
                             href="{{ route('admin.permission.index') }}">Permission</a>
                     </li>
